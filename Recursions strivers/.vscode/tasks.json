@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build C or C++",
+      "type": "shell",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "if \"%~x1\"==\".c\" ( gcc \"${file}\" -o \"${fileDirname}\\${fileBasenameNoExtension}.exe\" ) else ( g++ \"${file}\" -o \"${fileDirname}\\${fileBasenameNoExtension}.exe\" )"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Run Executable",
+      "type": "shell",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "start cmd /k \"cd /d ${fileDirname} && ${fileBasenameNoExtension}.exe\""
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false
+      }
+    },
+    {
+      "label": "Build and Run",
+      "dependsOn": ["Build C or C++", "Run Executable"],
+      "dependsOrder": "sequence"
+    }
+  ]
+}
